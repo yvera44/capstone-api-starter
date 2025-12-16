@@ -12,10 +12,10 @@ import org.yearup.models.Product;
 
 import java.util.List;
 
-@RestController // add the annotations to make this a REST controller
-@RequestMapping("categories")// add the annotation to make this controller the endpoint for the following url
-// http://localhost:8080/categories
-@CrossOrigin // add annotation to allow cross site origin requests
+@RestController
+@RequestMapping("categories")
+
+@CrossOrigin
 
 public class CategoriesController {
     private CategoryDao categoryDao;
@@ -27,25 +27,21 @@ public class CategoriesController {
         this.productDao = productDao;
     }
 
-    // add the appropriate annotation for a get action
     @GetMapping
     public List<Category> getAll() {
-        // find and return all categories
+
         return categoryDao.getAllCategories();
     }
 
-    // add the appropriate annotation for a get action
     @GetMapping("/{id}")
     public Category getById(@PathVariable int id) {
-        // get the category by id
+
         return categoryDao.getById(id);
     }
 
-    // the url to return all products in category 1 would look like this
-    // https://localhost:8080/categories/1/products
     @GetMapping("{categoryId}/products")
     public List<Product> getProductsById(@PathVariable int categoryId) {
-        // get a list of product by categoryId
+
         return productDao.listByCategoryId(categoryId);
     }
 
@@ -53,7 +49,7 @@ public class CategoriesController {
     @PreAuthorize("hasRole('ROLE_ADMIN')")
     @ResponseStatus(value = HttpStatus.CREATED)
     public Category addCategory(@RequestBody Category category) {
-        // insert the category
+
         try {
             return categoryDao.create(category);
         } catch (Exception ex) {
@@ -65,7 +61,7 @@ public class CategoriesController {
     @RequestMapping(path = "/{id}", method = RequestMethod.PUT)
     @ResponseStatus(HttpStatus.NO_CONTENT)
     public void updateCategory(@PathVariable int id, @RequestBody Category category) {
-        // update the category by id
+
         try {
             categoryDao.create(category);
         } catch (Exception ex) {
@@ -78,7 +74,7 @@ public class CategoriesController {
     @PreAuthorize("hasRole('ROLE_ADMIN')")
     @ResponseStatus(HttpStatus.NO_CONTENT)
     public void deleteCategory(@PathVariable int id) {
-        // delete the category by id
+
         try {
             var category = categoryDao.getById(id);
 
