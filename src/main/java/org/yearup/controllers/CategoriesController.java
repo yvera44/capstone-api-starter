@@ -36,7 +36,18 @@ public class CategoriesController {
     @GetMapping("/{id}")
     public Category getById(@PathVariable int id) {
 
-        return categoryDao.getById(id);
+        try {
+            var category = categoryDao.getById(id);
+
+            if (category == null)
+                throw new ResponseStatusException(HttpStatus.NOT_FOUND);
+
+            return category;
+        } catch (ResponseStatusException ex) {
+            throw ex; // preserve 404
+        } catch (Exception ex) {
+            throw new ResponseStatusException(HttpStatus.INTERNAL_SERVER_ERROR, "Oops... our bad.");
+        }
     }
 
     @GetMapping("{categoryId}/products")
