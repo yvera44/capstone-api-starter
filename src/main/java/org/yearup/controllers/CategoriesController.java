@@ -14,7 +14,6 @@ import java.util.List;
 
 @RestController
 @RequestMapping("categories")
-
 @CrossOrigin
 
 public class CategoriesController {
@@ -36,18 +35,13 @@ public class CategoriesController {
     @GetMapping("/{id}")
     public Category getById(@PathVariable int id) {
 
-        try {
-            var category = categoryDao.getById(id);
+            Category category = categoryDao.getById(id);
 
             if (category == null)
                 throw new ResponseStatusException(HttpStatus.NOT_FOUND);
 
             return category;
-        } catch (ResponseStatusException ex) {
-            throw ex; // preserve 404
-        } catch (Exception ex) {
-            throw new ResponseStatusException(HttpStatus.INTERNAL_SERVER_ERROR, "Oops... our bad.");
-        }
+
     }
 
     @GetMapping("{categoryId}/products")
@@ -68,9 +62,8 @@ public class CategoriesController {
         }
     }
 
+    @PutMapping("/{id}")
     @PreAuthorize("hasRole('ROLE_ADMIN')")
-    @RequestMapping(path = "/{id}", method = RequestMethod.PUT)
-    @ResponseStatus(HttpStatus.NO_CONTENT)
     public void updateCategory(@PathVariable int id, @RequestBody Category category) {
 
         try {
@@ -86,15 +79,11 @@ public class CategoriesController {
     @ResponseStatus(HttpStatus.NO_CONTENT)
     public void deleteCategory(@PathVariable int id) {
 
-        try {
             var category = categoryDao.getById(id);
 
             if (category == null)
                 throw new ResponseStatusException(HttpStatus.NOT_FOUND);
 
             categoryDao.delete(id);
-        } catch (Exception ex) {
-            throw new ResponseStatusException(HttpStatus.INTERNAL_SERVER_ERROR, "Oops... our bad.");
-        }
     }
 }

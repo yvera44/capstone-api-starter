@@ -19,25 +19,24 @@ public class MySqlCategoryDao extends MySqlDaoBase implements CategoryDao
 
     @Override
     public List<Category> getAllCategories() {
+        List<Category> categories = new ArrayList<>();
         String sql = """
-            SELECT category_id, name, description
-            FROM categories;
+            SELECT * FROM categories;
             """;
 
-        try (Connection conn = super.getConnection();
+        try (Connection conn = getConnection();
              PreparedStatement statement = conn.prepareStatement(sql);
              ResultSet rs = statement.executeQuery()) {
-            List<Category> categories = new ArrayList<>();
+
             while (rs.next()) {
 
                 categories.add(mapRow(rs));
             }
 
-            return categories;
-
         } catch (SQLException e) {
             throw new RuntimeException("Error getting all categories", e);
         }
+        return categories;
     }
 
     @Override
