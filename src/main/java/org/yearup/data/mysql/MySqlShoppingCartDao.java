@@ -64,31 +64,21 @@ public class MySqlShoppingCartDao extends MySqlDaoBase implements ShoppingCartDa
     }
 
     @Override
-    public void addItem(int userId, int productId, int quantity) {
+    public ShoppingCart addItem(int userId, int productId) {
 
-        String checkSql = "SELECT quantity FROM shopping_cart WHERE user_id = ? AND product_id = ?";
+        String checkSql = "INSERT INTO shopping_cart(user_id, product_id, quantity) values (?,?,?) ON DUPLICATE KEY UPDATE quantity = quantity + ?";
 
         try (Connection connection = getConnection();
-             PreparedStatement checkStatement = connection.prepareStatement(checkSql)) {
-            checkStatement.setInt(1, userId);
-            checkStatement.setInt(2, productId);
+             PreparedStatement statement = connection.prepareStatement(checkSql)) {
+            statement.setInt(1, userId);
+            statement.setInt(2, productId);
+            statement.setInt(3, 1);
+            statement.setInt(4, 1);
 
-            try (ResultSet row = checkStatement.executeQuery()) {
-                if (row.next()) {
-                    int currentQuantity = row.getInt("quantity");
-                    int newQuantity = currentQuantity + quantity;
-                    updateItem(userId, productId, newQuantity);
-                } else {
-                    String insertSql = "INSERT INTO shopping_cart (user_id, product_id, quantity) VALUES (?, ?, ?)";
+            statement.executeUpdate();
 
-                    try (PreparedStatement insertStatement = connection.prepareStatement(insertSql)) {
-                        insertStatement.setInt(1, userId);
-                        insertStatement.setInt(2, productId);
-                        insertStatement.setInt(3, quantity);
-                        insertStatement.executeUpdate();
-                    }
-                }
-            }
+            return getByUserId(userId);
+
         } catch (SQLException e) {
             throw new RuntimeException(e);
         }

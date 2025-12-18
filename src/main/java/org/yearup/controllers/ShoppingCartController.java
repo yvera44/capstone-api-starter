@@ -51,7 +51,8 @@ public class ShoppingCartController
         }
     }
 
-    public ShoppingCart addProduct(Principal principal, @PathVariable int productId )
+    @PostMapping("/products/{productId}")
+    public ShoppingCart addProduct(@PathVariable int productId, Principal principal)
     {
         try
         {
@@ -61,18 +62,7 @@ public class ShoppingCartController
 
             ShoppingCart cart = shoppingCartDao.getByUserId(userId);
 
-            if (cart.contains(productId)) {
-                ShoppingCartItem item = cart.get(productId);
-                item.setQuantity(item.getQuantity() + 1);
-            } else {
-                Product product = productDao.getById(productId);
-                ShoppingCartItem item = new ShoppingCartItem();
-                item.setProduct(product);
-                item.setQuantity(1);
-                cart.add(item);
-            }
-
-            return cart;
+            return shoppingCartDao.addItem(userId,productId);
         }
         catch(Exception e)
         {

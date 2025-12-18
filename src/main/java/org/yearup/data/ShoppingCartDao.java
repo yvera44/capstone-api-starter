@@ -12,11 +12,11 @@ public interface ShoppingCartDao
     ShoppingCart getByUserId(int userId);
     // add additional method signatures here
 
-    @PreAuthorize("hasRole('ROLE_ADMIN')")
-    @RequestMapping(path = "/{id}", method = RequestMethod.PUT)
-    @ResponseStatus(HttpStatus.NO_CONTENT)
+//    @PreAuthorize("hasRole('ROLE_ADMIN')")
+//    @RequestMapping(path = "/{id}", method = RequestMethod.PUT)
+//    @ResponseStatus(HttpStatus.NO_CONTENT)
 
-    void addItem(int userId, int productId, int quantity);
+    ShoppingCart addItem(int userId, int productId);
 
     void updateItem(int userId, int productId, int quantity);
 
