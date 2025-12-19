@@ -19,8 +19,4 @@ public abstract class MySqlDaoBase
     {
         return dataSource.getConnection();
     }
-
-    public abstract ShoppingCart deleteItem(int userId);
-
-    public abstract ShoppingCart updateItems(int userId, int productId, int quantity);
 }
