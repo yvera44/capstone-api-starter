@@ -43,7 +43,7 @@ public class ShoppingCartController
             int userId = user.getId();
 
             // use the shoppingcartDao to get all items in the cart and return the cart
-            return null;
+            return shoppingCartDao.getByUserId(userId);
         }
         catch(Exception e)
         {
@@ -70,7 +70,7 @@ public class ShoppingCartController
         }
     }
 
-    @RequestMapping(path = "/{id}", method = RequestMethod.PUT)
+    @PutMapping("/products/{productId}")
     @ResponseStatus(HttpStatus.NO_CONTENT)
     public ShoppingCart updateCart(Principal principal, @PathVariable int productId, @RequestBody ShoppingCartItem item) {
 
