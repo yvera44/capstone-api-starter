@@ -1,6 +1,5 @@
 package org.yearup.controllers;
 
-
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.security.access.prepost.PreAuthorize;
@@ -13,9 +12,7 @@ import org.yearup.data.ProfileDao;
 import org.yearup.data.UserDao;
 import org.yearup.models.Profile;
 import org.yearup.models.User;
-
 import java.security.Principal;
-
 
 @RestController
 @RequestMapping("/profile")
@@ -26,7 +23,6 @@ public class ProfileController {
 
     private ProfileDao profileDao;
     private UserDao userDao;
-
 
     @Autowired
     public ProfileController(ProfileDao profileDao, UserDao userDao) {
@@ -52,9 +48,5 @@ public class ProfileController {
         } catch (ResponseStatusException e) {
             throw new RuntimeException(e);
         }
-
-
     }
-
-
 }

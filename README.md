@@ -7,7 +7,7 @@ with the ability to manage products, shopping carts, orders, and accounts.
 
 ## 💡 Features
 * Ability to browse through the online store
-* Sort items by price, category, genre and item type 
+* Filter items by price, category, genre and item type 
 * Add items to cart
 * View item descriptions
 
@@ -17,9 +17,9 @@ with the ability to manage products, shopping carts, orders, and accounts.
 - **Database:** MySQL
 
 ## Insomnia Tests
-![Insomnia](insomnia.png)
+![InsomniaTests](Images/InsomniaTests.png)
 ## Shopping Cart 
-![ShoppingCart](shoppingcart.png)
+![ShoppingCart](Images/shoppingcart.png)
 ## Sorting by Categories
-![Categories](categories.png)
+![Categories](Images/categories.png)
 
